@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
@@ -11,8 +12,10 @@ public class Robot extends TimedRobot {
   private final WestCoastDrive _westCoastDrive    = new WestCoastDrive(); 
   private final Intake _intakeClass               = new Intake();
   private final Turret _turretClass               = new Turret();
-  private final Joystick _joystick                = new Joystick(0);
+  private final Joystick _joystick                = new Joystick(1);
+  private final Joystick _ButtonBoard             = new Joystick(2);
   private final SendableChooser<Integer> _chooser = new SendableChooser<>();
+  //private final Spark _leds                       = new Spark(19);
 
   private double speedReducerY = 2.5;
   private double speedReducerZ = 2.5; 
@@ -28,6 +31,7 @@ public class Robot extends TimedRobot {
     _chooser.setDefaultOption("Position 1", PositionOne);
     _chooser.addOption("Position 2", PositionTwo);
     _chooser.addOption("Position 3", PositionThree);
+    //_leds.set(0.65);
   }
 
   @Override
@@ -110,6 +114,10 @@ public class Robot extends TimedRobot {
       _intakeClass.Stop();
       _turretClass.StopShooter();
 
+    }
+
+    if(_ButtonBoard.getRawButton(5)) {
+      
     }
   }
 
