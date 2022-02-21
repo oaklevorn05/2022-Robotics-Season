@@ -15,6 +15,7 @@ public class Robot extends TimedRobot {
   private final Joystick _joystick                = new Joystick(1);
   private final Joystick _ButtonBoard             = new Joystick(2);
   private final SendableChooser<Integer> _chooser = new SendableChooser<>();
+  private final Climber _climberClass             = new Climber();
   //private final Spark _leds                       = new Spark(19);
 
   private double speedReducerY = 2.5;
@@ -117,7 +118,19 @@ public class Robot extends TimedRobot {
     }
 
     if(_ButtonBoard.getRawButton(5)) {
-      
+      _climberClass.Extend();
+    }else if(_ButtonBoard.getRawButton(2)) {
+      _climberClass.Retract();
+    }else {
+      _climberClass.StopClimber();
+    }
+
+    if(_ButtonBoard.getRawButton(1)) {
+      _climberClass.Push();
+    }else if(_ButtonBoard.getRawButton(3)) {
+      _climberClass.Pull();
+    }else {
+      _climberClass.StopTilt();
     }
   }
 
