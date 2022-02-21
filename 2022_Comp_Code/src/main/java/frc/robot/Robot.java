@@ -16,7 +16,8 @@ public class Robot extends TimedRobot {
   private final Joystick _ButtonBoard             = new Joystick(2);
   private final SendableChooser<Integer> _chooser = new SendableChooser<>();
   private final Climber _climberClass             = new Climber();
-  //private final Spark _leds                       = new Spark(19);
+  private final Spark LEDS                        = new Spark(4);
+  private final SendableChooser<Integer> _ledChooser = new SendableChooser<>();
 
   private double speedReducerY = 2.5;
   private double speedReducerZ = 2.5; 
@@ -26,13 +27,20 @@ public class Robot extends TimedRobot {
   private final Integer PositionTwo   = 2;
   private final Integer PositionThree = 3;
 
+  private final Integer blueAlliance = 1;
+  private final Integer redAlliance  = 2;
+
+
+
   @Override
   public void robotInit() {
     //sets up auton options on the Smart Dashboard
     _chooser.setDefaultOption("Position 1", PositionOne);
     _chooser.addOption("Position 2", PositionTwo);
     _chooser.addOption("Position 3", PositionThree);
-    //_leds.set(0.65);
+
+    _ledChooser.setDefaultOption("Blue Alliance", blueAlliance);
+    _ledChooser.addOption("Red Alliance", redAlliance);
   }
 
   @Override
@@ -42,6 +50,25 @@ public class Robot extends TimedRobot {
     //puts options and result on Smart Dashboard
     SmartDashboard.putData(_chooser);
     SmartDashboard.putNumber("Position", _chooser.getSelected());
+
+    SmartDashboard.putData(_ledChooser);
+    SmartDashboard.putNumber("Alliance", _ledChooser.getSelected());
+
+    if(Blue == true && _intake == true) {
+      LEDS.set(-0.65);
+    }else if(Blue == true) {
+      LEDS.set(-0.41);
+    }else {
+      LEDS.stopMotor;
+    }
+
+    if(Red == true && _intake == true) {
+      LEDS.set(0.43);
+    }else if(Red == true) {
+      LEDS.set(-0.31);
+    }else {
+      LEDS.stopMotor;
+    }
   }
 
   @Override
@@ -50,7 +77,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {}
 
-  private double yInput(){
+  private double yInput() {
     if(_joystick.getRawAxis(1) >=.2 || _joystick.getRawAxis(1) <= -.2){
       return _joystick.getY() / speedReducerY;
     }else{
